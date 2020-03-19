@@ -11,10 +11,17 @@ Run Locally:
     ./gradlew HelloWorldClient
     ```
 
+   You should see output like: `Greeter client received: Hello world`
+
 Deploy on Cloud Run:
 
 1. [![Run on Google Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run)
 
-1. Run the client against the service on Cloud Run:
+    *This will take a few minutes to build and deploy.*
 
+1. Run the client against the service  on Cloud Run:
+    ```
+    ./gradlew HelloWorldClient --args=YOUR_CLOUD_RUN_DOMAIN_NAME
+    ```
 
+   You should see output like: `Greeter client received: Hello YOUR_CLOUD_RUN_DOMAIN_NAME`

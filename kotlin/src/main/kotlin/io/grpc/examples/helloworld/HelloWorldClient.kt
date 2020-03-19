@@ -53,14 +53,16 @@ class HelloWorldClient constructor(
  * greets "world" otherwise.
  */
 fun main(args: Array<String>) {
-  println(args)
-  val port = 50051
+  val isRemote = args.size == 1
 
   Executors.newFixedThreadPool(10).asCoroutineDispatcher().use { dispatcher ->
+    val builder = if (isRemote)
+      ManagedChannelBuilder.forTarget(args[0] + ":443").useTransportSecurity()
+    else
+      ManagedChannelBuilder.forTarget("localhost:50051").usePlaintext()
+
     HelloWorldClient(
-        ManagedChannelBuilder.forAddress("localhost", port)
-            .usePlaintext()
-            .executor(dispatcher.asExecutor()).build()
+      builder.executor(dispatcher.asExecutor()).build()
     ).use {
       val user = args.singleOrNull() ?: "world"
       it.greet(user)
