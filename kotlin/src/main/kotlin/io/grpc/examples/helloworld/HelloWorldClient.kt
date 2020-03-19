@@ -27,9 +27,7 @@ import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.asExecutor
 import kotlinx.coroutines.runBlocking
 
-class HelloWorldClient constructor(
-    private val channel: ManagedChannel
-) : Closeable {
+class HelloWorldClient(val channel: ManagedChannel): Closeable {
   private val stub: GreeterCoroutineStub = GreeterCoroutineStub(channel)
 
   fun greet(name: String) = runBlocking {

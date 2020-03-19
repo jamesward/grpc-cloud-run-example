@@ -19,9 +19,7 @@ package io.grpc.examples.helloworld
 import io.grpc.Server
 import io.grpc.ServerBuilder
 
-class HelloWorldServer constructor(
-    private val port: Int
-) {
+class HelloWorldServer(val port: Int) {
   val server: Server = ServerBuilder
       .forPort(port)
       .addService(HelloWorldService())
@@ -33,7 +31,7 @@ class HelloWorldServer constructor(
     Runtime.getRuntime().addShutdownHook(
         Thread {
           println("*** shutting down gRPC server since JVM is shutting down")
-          this@HelloWorldServer.stop()
+          stop()
           println("*** server shut down")
         }
     )
